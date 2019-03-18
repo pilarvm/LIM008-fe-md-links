@@ -1,47 +1,47 @@
 const fs = require('fs');
 const path = require('path');
-//const ruta = process.argv[2]
-const route = '../../planing.txt';
-const myMarked = require('marked');
+const marked = require('marked');
 
-// export const mdLinks = (path, options) => {
-//     evaluatePath(path)
-// }
+export const evaluatePath = (route) => path.isAbsolute(route);
 
-export const evaluatePath = (input) => {
-    if (path.isAbsolute(input)) return true;
-    else return false;
-}
+export const transformToAbsPath = (route) => path.resolve(route);
 
-export const transformToAbsPath = (input) => {
-    input = path.resolve(input);
-    return (path.normalize(input));
-}
+export const isADirectory = (route) => fs.lstatSync(route).isDirectory();
 
-export const recognizeIfIsFile = (input) => {
-    return fs.lstatSync(input).isFile();
-    // fs.lstat(input, (err, stats) => {
-    //     if(err) return console.log(err); //Handle error
-    //     cb(stats.isFile())  
-    // });
+export const getFiles = (route) => {
+    const applyDirStats = isADirectory(route);
+    let arrFiles = [];
+    if (applyDirStats === false) {
+        arrFiles.push(route);
+    } else {
+        const file = fs.readdirSync(route);
+        file.forEach((element) => {
+            const childOfDir = path.join(route, element);
+            const stats = fs.lstatSync(childOfDir);
+            if (stats.isDirectory()) {
+                arrFiles = arrFiles.concat(getFiles(childOfDir));
+            } else {
+                arrFiles.push(childOfDir);
+            }
+        });
+    }
+    return arrFiles;
 };
 
-export const recognizeIfIsMDFile = (input) => {
-    if (path.extname(input) === '.md') return true;
-    return false;
-};
-
-export const getMDContent = (route) => {
-    const data = fs.readFileSync(route, 'utf8');
-    let links = [];
-    const renderer = new myMarked.Renderer();
-    renderer.link = (href, title, text) => {
-        links.push({ href, text, file: route });
-        return '';
-    };
-    myMarked(data, { renderer });
+export const extractLinks = (route) => {
+    const links = [];
+    const getArrRoutes = getFiles(route);
+    getArrRoutes.forEach(file => {
+        const dataFile = fs.readFileSync(file, 'utf8');
+        const renderer = new marked.Renderer();
+        renderer.link = (href, title, text) => {
+            links.push({
+                href: href,
+                text: text.slice(0, 50),
+                path: file
+            });
+        };
+        marked(dataFile, { renderer: renderer });
+    });
     return links;
 };
-
-
-

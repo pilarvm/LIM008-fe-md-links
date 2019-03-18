@@ -1,8 +1,8 @@
 {
-  "name": "social-network",
+  "name": "markdown-links",
   "version": "1.0.0",
-  "description": "Social Network @ Laboratoria",
-  "main": "src/index.html",
+  "description": "Markdown Links @ Laboratoria",
+  "main": "lib/index.js",
   "keywords": [
     "javascript",
     "npm",
@@ -11,7 +11,11 @@
   "license": "MIT",
   "scripts": {
     "eslint": "eslint --ext .js src/ test/",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "build": "babel src -d lib"
+  },
+  "bin": {
+    "md-links": "lib/cli.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -27,13 +31,14 @@
     "regenerator-runtime": "^0.13.1"
   },
   "directories": {
+    "lib": "lib",
     "test": "test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pilarvm/LIM008-fe-md-links.git"
   },
-  "author": "",
+  "author": "Pilar Varillas",
   "bugs": {
     "url": "https://github.com/pilarvm/LIM008-fe-md-links/issues"
   },
@@ -62,6 +67,7 @@
     "fs.realpath": "^1.0.0",
     "functional-red-black-tree": "^1.0.1",
     "get-value": "^2.0.6",
-    "marked": "^0.6.1"
+    "marked": "^0.6.1",
+    "node-fetch": "^2.3.0"
   }
 }
