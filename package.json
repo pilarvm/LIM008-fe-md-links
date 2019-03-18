@@ -36,13 +36,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pilarvm/LIM008-fe-md-links.git"
+    "url": "git+https://github.com/pilarvm/md-links.git"
   },
   "author": "Pilar Varillas",
   "bugs": {
-    "url": "https://github.com/pilarvm/LIM008-fe-md-links/issues"
+    "url": "https://github.com/pilarvm/md-links/issues"
   },
-  "homepage": "https://github.com/pilarvm/LIM008-fe-md-links#readme",
+  "homepage": "https://github.com/pilarvm/md-links#readme",
   "dependencies": {
     "decode-uri-component": "^0.2.0",
     "deep-is": "^0.1.3",

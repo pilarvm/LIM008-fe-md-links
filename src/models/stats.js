@@ -10,7 +10,7 @@ export const calculateUniqueLinks = (arrLinks) => {
 };
 
 export const calculateBrokenLinks = (arrLinks) => {
-    const brokenLinks = (arrLinks.filter(links => (links.value === 'Fail')));
+    const brokenLinks = (arrLinks.filter(links => (links.value === 'fail')));
     return brokenLinks.length;
 };
 
